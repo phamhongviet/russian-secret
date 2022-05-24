@@ -23,12 +23,13 @@ func bytesToBits(data []byte) string {
 		s := fmt.Sprintf("%08b", n)
 		bits.WriteString(s)
 	}
-	return (fmt.Sprintf("%s", bits))
+	return (bits.String())
 }
 
 func Encode(text string, data []byte) string {
 	// TODO check capacity
 	bits := bytesToBits(data)
+	dataLength := len(bits)
 	textBytes := []int32(text)
 	i := 0
 	for t, c := range textBytes {
@@ -38,6 +39,9 @@ func Encode(text string, data []byte) string {
 				textBytes[t] = v
 			}
 			i += 1
+			if i >= dataLength {
+				break
+			}
 		}
 	}
 	return (string(textBytes))
