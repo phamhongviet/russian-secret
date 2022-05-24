@@ -1,4 +1,4 @@
-package codebook
+package main
 
 var Codebook = map[int32]int32{
 	'a': 'а',
