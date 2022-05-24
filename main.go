@@ -5,23 +5,20 @@ import (
 )
 
 func main() {
-	/*
-	fmt.Printf("Codebook:\n")
-	for k, v := range Codebook {
-		fmt.Printf("Character: %c \t Value: %d \t Character: %c \t Value: %d \n", k, k, v, v)
-	}
-	fmt.Printf("Reverse Codebook:\n")
-	for k, v := range ReverseCodebook {
-		fmt.Printf("Character: %c \t Value: %d \t Character: %c \t Value: %d \n", k, k, v, v)
-	}
-	*/
-	c := GetCapacity(`
+	data := []byte("Steganography is fun")
+	data = append(data, 0x4)
+	fmt.Printf("[Original data]:\n%v\n", data)
+	fmt.Printf("[Decoded data, ascii]:\n%s\n", string(data))
+	text := `The Internet is the global system of interconnected computer networks that uses the Internet protocol suite (TCP/IP) to communicate between networks and devices. It is a network of networks that consists of private, public, academic, business, and government networks of local to global scope, linked by a broad array of electronic, wireless, and optical networking technologies. The Internet carries a vast range of information resources and services, such as the inter-linked hypertext documents and applications of the World Wide Web (WWW), electronic mail, telephony, and file sharing. `
+	fmt.Printf("[Original text]:\n%s\n", text)
 
-	EOT is one of a number of control characters used by seerial devices. There are a number of other control characters which are related to transmission of data over serial lines or storage of files on a serial source like paper tape. These include characters such as SOH, STX, ETX, FS, RS, GS, and, US. Additional control characters are used for transmission control and error correction.
+	c := GetCapacity(text)
+	fmt.Printf("[Capacity]: %d bytes\n", c)
+	fmt.Printf("[Data length]: %d bytes\n", len(data))
+	encodedText := Encode(text, data)
+	fmt.Printf("[Encoded text]:\n%s\n", encodedText)
 
-	On a serial connection an EOT (End Of Transmission) character indicates a desire to end the transmission. Serial connections are usually accessed using a file driver. When the serial transmission ends, the file driver reports this as an EOF (End Of File) condition.
-
-	EOF is not a character. getchar() returns an integer. A valid character while will have a value in the range 0 to 255. The value of -1 is often used as false/invalid/fail indicator on Unix/Linux. (Actually a non 0 value, as there are any number of reasons not to succeed, but usually only one success case.) When getchar() returns -1 it is clearly not returning a character. However, if you store the output in a byte, you won't be able to distinguish EOF from the DEL (Delete) character.
-	`)
-	fmt.Printf("Capacity: %d bytes\n", c)
+	decodedData := Decode(encodedText, 0x4)
+	fmt.Printf("[Decoded data]:\n%v\n", decodedData)
+	fmt.Printf("[Decoded data, ascii]:\n%s\n", string(decodedData))
 }
